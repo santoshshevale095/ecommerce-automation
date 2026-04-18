@@ -102,6 +102,21 @@ public class baseClass extends BaseTest {
 
     }
 
+    @Test(dependsOnMethods={"submitOrder"})
+    public void orderHistory2(){
+
+
+        String productName = "ADIDAS ORIGINAL";
+        landingPage land = new landingPage(driver);
+        land.loginApplication("santoshshevale@gmail.com", "Pass@1234");
+
+        GoToHeaderPage Orderlist = land.goToOrdersPage(); // ✅ now works
+
+        Assert.assertTrue(Orderlist.verifyDisplayedOrder(productName)); // ✅ enable this
+
+
+    }
+
 @DataProvider
     public Object[][] getdata() throws IOException {
     DataReader details = new DataReader();
