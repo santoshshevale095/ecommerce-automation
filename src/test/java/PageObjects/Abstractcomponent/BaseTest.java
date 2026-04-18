@@ -5,6 +5,7 @@ import PageObjects.landingPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
@@ -30,9 +31,16 @@ import java.util.Properties;
                     ? System.getProperty("browser")
                     : prop.getProperty("browser");
 
+
+
             if (browserName.equalsIgnoreCase("chrome")) {
                 WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
+                ChromeOptions options =new ChromeOptions();
+                options.addArguments("--headless=new");
+                options.addArguments("--disable-gpu");
+                options.addArguments("--window-size=1920,1080");
+                driver = new ChromeDriver(options);
+
 
 
 

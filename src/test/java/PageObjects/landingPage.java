@@ -30,6 +30,7 @@ public class landingPage extends abstractComponent {
     @FindBy(xpath = "//div[@aria-label='Incorrect email or password.']")
     WebElement errorMessage;
 
+
     //div[@aria-label='Incorrect email or password.']
 
 
@@ -39,7 +40,9 @@ public class landingPage extends abstractComponent {
         pwd.sendKeys(pass);
         Submit.click();
 
+
     }
+
 
 
     public String getError(){
