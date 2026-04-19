@@ -53,7 +53,7 @@ public void addtoCart(String productName){
     WebElement prod = getProdName(productName);
     prod.findElement(CartItem).click();
     waitForElementToAppear(Toast);
-    waitForElementTodisapear(spinner);
+    waitForLoaderToDisappear();
 
 }
 

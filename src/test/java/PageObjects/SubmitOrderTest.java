@@ -18,26 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class baseClass extends BaseTest {
+public class SubmitOrderTest extends BaseTest {
 
 
-    @Test
-    public static ExtentReports loginReport(){
-        String path = System.getProperty("user.dir") + "/reports/index.html";
-        ExtentSparkReporter reporter = new ExtentSparkReporter(path);
-        reporter.config().setReportName("Web Automation");
-        reporter.config().setDocumentTitle("Test Result");
-
-        ExtentReports extend = new ExtentReports();
-        extend.attachReporter(reporter);
-        extend.setSystemInfo("Tester","Ganpat Shevale");
-
-        return extend;
-
-
-    }
-
-      // ✅ declare first
 
    @Test (dataProvider="getdata")
 
@@ -98,21 +81,6 @@ public class baseClass extends BaseTest {
         GoToHeaderPage Orderlist = land.goToOrdersPage(); // ✅ now works
 
        Assert.assertTrue(Orderlist.verifyDisplayedOrder(productName)); // ✅ enable this
-
-
-    }
-
-    @Test(dependsOnMethods={"submitOrder"})
-    public void orderHistory2(){
-
-
-        String productName = "ADIDAS ORIGINAL";
-        landingPage land = new landingPage(driver);
-        land.loginApplication("santoshshevale@gmail.com", "Pass@1234");
-
-        GoToHeaderPage Orderlist = land.goToOrdersPage(); // ✅ now works
-
-        Assert.assertTrue(Orderlist.verifyDisplayedOrder(productName)); // ✅ enable this
 
 
     }

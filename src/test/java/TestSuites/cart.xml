@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite  name="All Test Suite">
+
+<suite name="All Test Suite">
 
     <listeners>
         <listener class-name="PageObjects.Listeners"/>
     </listeners>
 
-    
-    <test thread-count="2" verbose="2" preserve-order="true" name="C:/Users/ganpat.shevale/OneDrive - ClaySys/Desktop/EcommerceSelenium/Ecommerce">
+    <test name="Cart Tests" thread-count="2" verbose="2" preserve-order="true">
         <classes>
-            <class name="PageObjects.baseClass">
-                <methods>
-                    <include name="submitOrder"/>
-                </methods>
-            </class>
-            <class name="PageObjects.BaseClassV2">
-                <methods>
-                    <include name="submitOrderV2"/>
-                </methods>
-            </class>
+            <class name="PageObjects.SubmitOrderTest"/>
         </classes>
     </test>
+
 </suite>

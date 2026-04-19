@@ -55,7 +55,6 @@ WebDriver driver;
 
     }
 
-
     public void waitforWebelementtoAppear(WebElement findby) {
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -64,14 +63,17 @@ WebDriver driver;
     }
 
 
-
-
-
-    public void waitForElementTodisapear(WebElement ele) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.invisibilityOf(ele));
-
+    public void waitForWebElementToBeClickable(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
     }
+
+    public void waitForLoaderToDisappear() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ngx-spinner-overlay")));
+    }
+
+
         public void ToCart(){
         additem.click();
 

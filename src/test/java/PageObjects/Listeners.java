@@ -10,7 +10,7 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-public class Listeners extends  baseClass implements ITestListener {
+public class Listeners implements ITestListener {
 
     ExtentTest test;
     ExtentReports extend =  ExtendReporterNG.getReportObject();
@@ -18,9 +18,7 @@ public class Listeners extends  baseClass implements ITestListener {
     ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>();
     @Override
     public void onTestSuccess(ITestResult result) {
-        ITestListener.super.onTestSuccess(result);
         extentTest.get().log(Status.PASS,"Test Pass");
-        extentTest.set(test);
 
     }
 
@@ -28,14 +26,15 @@ public class Listeners extends  baseClass implements ITestListener {
     public void onTestStart(ITestResult result) {
         ITestListener.super.onTestStart(result);
        test = extend.createTest(result.getMethod().getMethodName());
+       extentTest.set(test);
     }
 
     @SneakyThrows
     @Override
     public void onTestFailure(ITestResult result) {
         ITestListener.super.onTestFailure(result);
-        extentTest.get().fail("Test Fail");
-       String filepath =  getScreenshot(result.getMethod().getMethodName());
+        extentTest.get().fail(result.getThrowable());
+        String filepath = new SubmitOrderTest().getScreenshot(result.getMethod().getMethodName());
         extentTest.get().addScreenCaptureFromPath(filepath,result.getMethod().getMethodName());
     }
 
