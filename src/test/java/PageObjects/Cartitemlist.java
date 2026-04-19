@@ -1,6 +1,8 @@
 package PageObjects;
 
 import PageObjects.Abstractcomponent.abstractComponent;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,10 +15,10 @@ public class Cartitemlist extends abstractComponent {
     WebDriver driver;
 
 
-    @FindBy(xpath = "//div/h3[1]")
+    @FindBy(css = ".cartSection h3")
     List<WebElement> items;
 
-    @FindBy(xpath = "//button[text()='Checkout']")
+    @FindBy(css = ".totalRow button")
     WebElement check;
 
 
@@ -26,31 +28,41 @@ public class Cartitemlist extends abstractComponent {
         PageFactory.initElements(driver,this);
     }
 
-
     public boolean VerifyProductCart(String productName) {
-
-        WebElement item = items.stream().filter(t -> t.getText().equals(productName)).findFirst().orElse(null);
-        if (item != null) {
-            System.out.println(item.getText());
-            return true;
-        }
-
-        return false;
+        waitForElementToAppear(By.cssSelector(".cartSection"));
+        return items.stream()
+                .anyMatch(t -> t.getText().trim().equalsIgnoreCase(productName));
     }
 
     public ChekOut checkout() {
-        check.click();
+
+        // Step 1: wait for loader to disappear
+        waitForLoaderToDisappear();
+
+        waitForElementToAppear(By.cssSelector(".totalRow"));
+
+        // Step 2: wait until clickable
+        waitForWebElementToBeClickable(check);
+
+        // Step 3: scroll into view
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].scrollIntoView({block: 'center'});", check);
+
+        // Step 4: wait again after scroll
+        waitForWebElementToBeClickable(check);
+
+        // Step 5: safe click
+        try {
+            check.click();
+        } catch (Exception e) {
+            // fallback if intercepted
+            ((JavascriptExecutor) driver)
+                    .executeScript("arguments[0].click();", check);
+        }
+
         return new ChekOut(driver);
     }
-
-
-
-
 }
-
-
-
-
 
 
 

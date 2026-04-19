@@ -47,7 +47,6 @@ public class landingPage extends abstractComponent {
     }
 
 
-
     public String getError(){
 
         waitforWebelementtoAppear(errorMessage);
