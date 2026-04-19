@@ -2,6 +2,7 @@ package PageObjects.Abstractcomponent;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -55,7 +56,6 @@ WebDriver driver;
 
     }
 
-
     public void waitforWebelementtoAppear(WebElement findby) {
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -63,19 +63,33 @@ WebDriver driver;
 
     }
 
-
-
-
-
-    public void waitForElementTodisapear(WebElement ele) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.invisibilityOf(ele));
-
+    public void waitForElementToDisappear(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
-        public void ToCart(){
-        additem.click();
 
-        }
+
+    public void waitForWebElementToBeClickable(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    public void waitForLoaderToDisappear() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ngx-spinner-overlay")));
+    }
+
+
+    public void ToCart(){
+
+        waitForWebElementToBeClickable(additem);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", additem);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", additem);
+
+        waitForWebElementToBeClickable(additem);
+
+        additem.click();   // normal click works now
+    }
 
 
 

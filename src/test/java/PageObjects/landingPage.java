@@ -2,7 +2,9 @@ package PageObjects;
 
 import PageObjects.Abstractcomponent.abstractComponent;
 
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -38,11 +40,11 @@ public class landingPage extends abstractComponent {
     public void loginApplication(String email, String pass){
         userEmail.sendKeys(email);
         pwd.sendKeys(pass);
-        Submit.click();
-
+        waitForLoaderToDisappear();
+        waitForWebElementToBeClickable(Submit);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", Submit);
 
     }
-
 
 
     public String getError(){
